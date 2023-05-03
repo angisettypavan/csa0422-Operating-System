@@ -48,6 +48,6 @@ int main()
     firstFit(blockSize, m, processSize, n);
  
     return 0 ;
-}
+    }
 
 
