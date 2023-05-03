@@ -32,19 +32,4 @@ int main() {
 
 
 
-output :
 
-enter the no of processes : 4
-the arrival time for process P1 : 5
-the burst time for process P1 : 4
-the arrival time for process P2 : 4
-the burst time for process P2 : 4
-the arrival time for process P3 : 6
-the burst time for process P3 : 5
-the arrival time for process P4 : 7
-the burst time for process P4 : 8
-P[10]   |       9999    |       0
-
-
- average waiting time = 0.000000
- average turnaround time = 2499.750000
