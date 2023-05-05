@@ -1,3 +1,9 @@
+4.	Write a C program to implement the first-fit algorithm for memory management.
+Test Case:
+Memory partitions: 300 KB, 600 KB, 350 KB, 200 KB, 750 KB, and 125 KB (in order) Show the outcome for the test case with first-fit algorithms to place the processes of size 115 KB, 500 KB, 358 KB, 200 KB, and 375 KB (in order)
+
+
+
 #include<stdio.h>
  
 void firstFit(int blockSize[], int m, int processSize[], int n)
