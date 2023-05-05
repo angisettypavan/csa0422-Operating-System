@@ -1,3 +1,7 @@
+Consider three processes (process id 0, 1, 2 respectively) with compute time bursts 2, 4 and 8-time units. All processes arrive at time zero. 
+Write a program to compute the average waiting time and average turnaround time based on First Come First Serve scheduling
+
+
 #include <stdio.h>
 
 int main() {
@@ -5,7 +9,7 @@ int main() {
     int process_id[] = {0, 1, 2};
     int burst_time[] = {2, 4, 8};
     int arrival_time[] = {0, 0, 0};
-    int completion_time[num_processes];
+    int completion_time[num_processes];Consider three processes (process id 0, 1, 2 respectively) with compute time bursts 2, 4 and 8-time units. All processes arrive at time zero. Write a program to compute the average waiting time and average turnaround time based on First Come First Serve scheduling
     int waiting_time[num_processes];
     int turnaround_time[num_processes];
     int total_waiting_time = 0;
@@ -43,3 +47,10 @@ int main() {
 
     return 0;
 }
+Output:
+Process Burst Time      Arrival Time    Waiting Time    Turnaround Time
+0       2               0               0               2
+1       4               0               2               6
+2       8               0               6               14
+Average waiting time: 2.67
+Average turnaround time: 7.33
