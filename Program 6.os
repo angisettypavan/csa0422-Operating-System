@@ -1,3 +1,13 @@
+Write a C program to implement the deadlock detection algorithm for a system with 3 processes and 3 resource instances and the resource matrices are given below.
+Max Matrix           Allocation Matrix
+3 6 8			3 3 3
+4 3 3			2 0 3
+3 4 4			1 2 4
+The number of available resources is [1,2,0].  Determine if the system is in a deadlock state and identify the deadlocked processes.
+
+
+
+
 #include<stdio.h>
   int max[100][100];
   int alloc[100][100];
@@ -136,3 +146,41 @@
   printf("\n System is in unsafe state");
 }
 }
+
+Output:
+**** Banker's Algo ******
+Enter the no of Processes       5
+Enter the no of resources instances     2
+Enter the Max Matrix
+5
+4
+5
+4
+5
+4
+5
+4
+5
+4
+Enter the Allocation Matrix
+8
+8
+9
+8
+7
+5
+7
+9
+7
+5
+Enter the available Resources
+2
+5
+Process  Allocation      Max     Available
+P1       8 8    5 4     2 5
+P2       9 8    5 4
+P3       7 5    5 4
+P4       7 9    5 4
+P5       7 5    5 4
+P0->P1->P2->P3->P4->
+ The system is in safe state
