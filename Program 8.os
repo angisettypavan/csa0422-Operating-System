@@ -1,4 +1,6 @@
-#include<stdio.h>
+Write a C program to simulate FCFS disk scheduling algorithm and execute your program and find the average head movement with the following test case: 
+No of tracks 5; Track position:55   58    60   70   18      
+
 #include<stdlib.h>
 int main()
 {
@@ -20,3 +22,13 @@ int main()
     return 0;
     
 }
+
+Output:
+Enter the number of Requests
+2
+Enter the Requests sequence
+5
+5
+Enter initial head position
+5
+Total head moment is 0
