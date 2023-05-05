@@ -1,3 +1,16 @@
+1.	 Consider a system with 4 processes and 3 resources with the given resource matrices.
+	Claim matrix                  Allocation matrix
+	    3 2 2			1 0 0
+	    6 1 3			6 1 2
+	    3 1 4			2 1 1
+ 	   4 2 2		        0 0 2
+	The resource vector is [9,3,6].  
+	Write a C program to determine if the system is in safe or unsafe state.
+
+
+
+
+
 #include <stdio.h> 
 int main() 
 { 
