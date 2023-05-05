@@ -1,3 +1,7 @@
+Write a C program to illustrate the page replacement method where the current least recently used element is replaced and determine the number of page faults for the following test case:
+No. of page frames: 3; Page reference sequence 1,2,3,2,1,5,2,1,6,2,5,6,3,1,3,6,1,2,4 and 3.
+
+
 #include<stdio.h>
 int main()
 {
@@ -45,3 +49,9 @@ int main()
     }
     printf("Number of page faults:%d",fault);
 }
+
+Output:
+Enter no of pages:19
+Enter page reference sequence:1 2 3 2 1 5 2 1 6 2 5 6 3 1 3 6 1 2 4
+Enter no of page frames:3
+Number of page faults:11
