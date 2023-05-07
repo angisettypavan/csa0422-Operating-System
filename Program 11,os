@@ -1,0 +1,58 @@
+ Write a C program to create 4 child processes. In the first child process, print the odd numbers. In the second child process print the even numbers. In the third child process print the multiple of 3.
+ In the fourth child process print the multiples of 5. Print the process id for each of the processes.
+ 
+ #include <stdio.h>
+#include <unistd.h>
+#include <signal.h>
+
+#define ERROR(m) perror("Error while: "#m); \
+  return 1;
+
+void handler(int sig){
+  // do nothing
+}
+
+int main(void){
+  pid_t child_pid;
+  pid_t parent_pid;
+  struct sigaction sa;
+  parent_pid = getpid();
+
+  sigemptyset(&sa.sa_mask);
+  sa.sa_handler = handler;
+  sa.sa_flags = 0;
+  if(sigaction(SIGUSR1,&sa,NULL) == -1){
+    ERROR("sigaction()");
+  }
+
+  switch(child_pid = fork()){
+  case -1: // in case of error
+    ERROR("fork()");
+  case 0:  // child
+    for(int number = 2; number <= 10; number += 2){
+      pause(); // waiting for any type of signal
+      printf("Child: %d\n",number);
+      kill(parent_pid,SIGUSR1);
+    }
+    break;
+  default:  // parent
+    for(int number = 1; number <= 9; number += 2){
+      printf("Parent: %d\n",number);
+      kill(child_pid,SIGUSR1);
+      pause();
+    }
+    break;
+  }
+}
+
+Output:
+Parent: 1
+Child: 2
+Parent: 3
+Child: 4
+Parent: 5
+Child: 6
+Parent: 7
+Child: 8
+Parent: 9
+Child: 10
