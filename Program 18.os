@@ -5,87 +5,155 @@ Consume an item in the beginning and show that the buffer is EMPTY
 Produce 4 items and show that the buffer is FULL
 
 
+Program :
+
 #include <stdio.h>
-#include <pthread.h>
+#include <stdlib.h>
 
-#define BUFFER_SIZE 3
+// Initialize a mutex to 1
+int mutex = 1;
 
-int buffer[BUFFER_SIZE];
-int count = 0, in = 0, out = 0;
+// Number of full slots as 0
+int full = 0;
 
-pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-pthread_cond_t buffer_not_full = PTHREAD_COND_INITIALIZER;
-pthread_cond_t buffer_not_empty = PTHREAD_COND_INITIALIZER;
+// Number of empty slots as size
+// of buffer
+int empty = 10, x = 0;
 
-void *producer(void *arg)
+// Function to produce an item and
+// add it to the buffer
+void producer()
 {
-    int i, data;
+	// Decrease mutex value by 1
+	--mutex;
 
-    for (i = 0; i < 4; i++) {
-        data = i + 1;
+	// Increase the number of full
+	// slots by 1
+	++full;
 
-        pthread_mutex_lock(&mutex);
-        while (count == BUFFER_SIZE) {
-            printf("Buffer is full. Producer waiting...\n");
-            pthread_cond_wait(&buffer_not_full, &mutex);
-        }
+	// Decrease the number of empty
+	// slots by 1
+	--empty;
 
-        buffer[in] = data;
-        in = (in + 1) % BUFFER_SIZE;
-        count++;
+	// Item produced
+	x++;
+	printf("\nProducer produces"
+		"item %d",
+		x);
 
-        printf("Produced item: %d\n", data);
-
-        pthread_cond_signal(&buffer_not_empty);
-        pthread_mutex_unlock(&mutex);
-    }
-
-    pthread_exit(NULL);
+	// Increase mutex value by 1
+	++mutex;
 }
 
-void *consumer(void *arg)
+// Function to consume an item and
+// remove it from buffer
+void consumer()
 {
-    int i, data;
+	// Decrease mutex value by 1
+	--mutex;
 
-    for (i = 0; i < 1; i++) {
-        pthread_mutex_lock(&mutex);
-        while (count == 0) {
-            printf("Buffer is empty. Consumer waiting...\n");
-            pthread_cond_wait(&buffer_not_empty, &mutex);
-        }
+	// Decrease the number of full
+	// slots by 1
+	--full;
 
-        data = buffer[out];
-        out = (out + 1) % BUFFER_SIZE;
-        count--;
+	// Increase the number of empty
+	// slots by 1
+	++empty;
+	printf("\nConsumer consumes "
+		"item %d",
+		x);
+	x--;
 
-        printf("Consumed item: %d\n", data);
-
-        pthread_cond_signal(&buffer_not_full);
-        pthread_mutex_unlock(&mutex);
-    }
-
-    pthread_exit(NULL);
+	// Increase mutex value by 1
+	++mutex;
 }
 
+// Driver Code
 int main()
 {
-    pthread_t producer_thread, consumer_thread;
+	int n, i;
+	printf("\n1. Press 1 for Producer"
+		"\n2. Press 2 for Consumer"
+		"\n3. Press 3 for Exit");
 
-    // Initialize buffer with all zeros
-    for (int i = 0; i < BUFFER_SIZE; i++) {
-        buffer[i] = 0;
-    }
+// Using '#pragma omp parallel for'
+// can give wrong value due to
+// synchronization issues.
 
-    // Consume an item in the beginning
-    pthread_create(&consumer_thread, NULL, consumer, NULL);
-    pthread_join(consumer_thread, NULL);
+// 'critical' specifies that code is
+// executed by only one thread at a
+// time i.e., only one thread enters
+// the critical section at a given time
+#pragma omp critical
 
-    // Produce 4 items
-    pthread_create(&producer_thread, NULL, producer, NULL);
-    pthread_join(producer_thread, NULL);
+	for (i = 1; i > 0; i++) {
 
-    return 0;
+		printf("\nEnter your choice:");
+		scanf("%d", &n);
+
+		// Switch Cases
+		switch (n) {
+		case 1:
+
+			// If mutex is 1 and empty
+			// is non-zero, then it is
+			// possible to produce
+			if ((mutex == 1)
+				&& (empty != 0)) {
+				producer();
+			}
+
+			// Otherwise, print buffer
+			// is full
+			else {
+				printf("Buffer is full!");
+			}
+			break;
+
+		case 2:
+
+			// If mutex is 1 and full
+			// is non-zero, then it is
+			// possible to consume
+			if ((mutex == 1)
+				&& (full != 0)) {
+				consumer();
+			}
+
+			// Otherwise, print Buffer
+			// is empty
+			else {
+				printf("Buffer is empty!");
+			}
+			break;
+
+		// Exit Condition
+		case 3:
+			exit(0);
+			break;
+		}
+	}
 }
+Output :
 
-Output:
-Buffer is empty. Consumer waiting...
+1. Press 1 for Producer
+2. Press 2 for Consumer
+3. Press 3 for Exit
+Enter your choice:1
+
+Producer producesitem 1
+Enter your choice:1
+
+Producer producesitem 2
+Enter your choice:2
+
+Consumer consumes item 2
+Enter your choice:2
+
+Consumer consumes item 1
+Enter your choice:5
+
+Enter your choice:5
+
+Enter your choice:5
+
