@@ -1,4 +1,6 @@
-Write the C program to Calculate how many disk I/O operations are required for contiguous, linked, and indexed (single-level) allocation strategies, if, for one block, the following conditions hold in a file currently consisting of 100 blocks. Assume that the file control block (and the index block, in the case of indexed allocation) is already in memory.
+Write the C program to Calculate how many disk I/O operations are required for contiguous, linked, and indexed (single-level) allocation strategies, if, for one block, 
+the following conditions hold in a file currently consisting of 100 blocks. Assume that the file control block (and the index block, in the case of indexed allocation) is
+already in memory.
  Test Cases:
 a.      The block is added at the beginning.
 b.      The block is added in the middle.
