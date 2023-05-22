@@ -32,9 +32,10 @@ void worst_fit_allocation(struct Partition partitions[], int num_partitions, int
         // Allocate the partition to the process
         if (worst_fit_index != -1) {
             partitions[worst_fit_index].allocated = 1;
-            printf("Allocated Process %d to Partition %d\n", i + 1, worst_fit_index + 1);
+            printf("Allocated Process %d (size %d KB) to Partition %d (size %d KB)\n",
+                   i + 1, process_sizes[i], worst_fit_index + 1, partitions[worst_fit_index].size);
         } else {
-            printf("Cannot allocate Process %d\n", i + 1);
+            printf("Cannot allocate Process %d (size %d KB)\n", i + 1, process_sizes[i]);
         }
     }
 }
@@ -67,16 +68,13 @@ int main() {
 }
 
 Output :
-Enter the number of memory partitions: 5
+Enter the number of memory partitions: 2
 Enter the sizes of memory partitions (in KB):
-2
 4
-4
-7
 5
 Enter the number of processes: 2
 Enter the sizes of processes (in KB):
-2
+4
 5
-Allocated Process 1 to Partition 4
-Allocated Process 2 to Partition 5
+Allocated Process 1 (size 4 KB) to Partition 2 (size 5 KB)
+Cannot allocate Process 2 (size 5 KB)
